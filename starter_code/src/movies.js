@@ -34,10 +34,10 @@ function ratesAverage(movies) {
         return acc + parseFloat(movie.rate);
     }, 0);
     // console.log((sum / movies.length).toFixed(2));
-    return ((sum / movies.length).toFixed(2));
+    return (Number((sum / movies.length).toFixed(2)));
 }
-
-console.log(ratesAverage(movies));
+ratesAverage(movies);
+// console.log(ratesAverage(movies));
 
 // Get the average of Drama Movies
 function dramaMoviesRate(movies) {
@@ -45,30 +45,42 @@ function dramaMoviesRate(movies) {
         if (movie.genre.indexOf("Drama") != -1) {
             return movie;
         }
+        else {
+            return undefined;
+        }
     });
+    // Devolvemos undefined si no hay películas de drama
+    if (arrayDramaMovies.length === 0) {
+        return undefined;
+    }
+    else {
+        var sumDramaMovies2 = arrayDramaMovies.reduce(function (acc, movie) {
+            return acc + Number(movie.rate);
+        }, 0);
 
-    var sumDramaMovies2 = arrayDramaMovies.reduce(function (acc, movie) {
-        return acc + Number(movie.rate);
-    }, 0);
-    return((sumDramaMovies2 / arrayDramaMovies.length).toFixed(2));
+        return Number((sumDramaMovies2 / arrayDramaMovies.length).toFixed(2));
+    }
+
 }
-console.log(dramaMoviesRate(movies));
+
+dramaMoviesRate(movies);
 
 
 // Order by time duration, in growing order
 function orderByDuration(movies) {
     var orderMovies = movies.map(function (movie) {
         return movie;
-    }).sort(function (movieRate1, movieRate2) {
+    });
+    var newOrderMovies = orderMovies.sort(function (movieRate1, movieRate2) {
         if (movieRate1.duration < movieRate2.duration) {
             return movieRate1;
         } else if (movieRate1.duration === movieRate2.duration) {
-            return ([movieRate1, movieRate2].sort())[0];
+            //return ([movieRate1, movieRate2].sort())[0];
         } else {
             return movieRate2;
         }
     });
-    console.log(orderMovies);
+    return newOrderMovies;
 }
 orderByDuration(turnHoursToMinutes(movies));
 
@@ -76,11 +88,16 @@ orderByDuration(turnHoursToMinutes(movies));
 // How many movies did STEVEN SPIELBERG
 function howManyMovies(movies) {
     var stevenArray = movies.filter(function (movie) {
-        return movie.director === 'Steven Spielberg';
+        return (movie.director === 'Steven Spielberg' && movie.genre.indexOf("Drama") != -1);
     });
-    return stevenArray;
+    // if (stevenArray.length === 0) {
+    //     return "Steven Spielberg directed 0 drama movies!";
+    // }
+    // else {
+        return "Steven Spielberg directed " + stevenArray.length + " drama movies!";
+    // }
 }
-console.log(howManyMovies(movies));
+howManyMovies(movies);
 
 
 // Order by title and print the first 20 titles
