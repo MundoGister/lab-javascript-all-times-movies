@@ -68,16 +68,12 @@ dramaMoviesRate(movies);
 
 // Order by time duration, in growing order
 function orderByDuration(movies) {
-    var orderMovies = movies.map(function (movie) {
-        return movie;
-    });
-    var newOrderMovies = orderMovies.sort(function (movieRate1, movieRate2) {
-        if (movieRate1.duration < movieRate2.duration) {
-            return movieRate1;
-        } else if (movieRate1.duration === movieRate2.duration) {
-            //return ([movieRate1, movieRate2].sort())[0];
-        } else {
-            return movieRate2;
+    var newOrderMovies = movies.sort(function (movieRate1, movieRate2) {
+        if (movieRate1.duration === movieRate2.duration ) {
+            return movieRate1.title < movieRate2.title ? -1 : 1;
+        }
+        else {
+            return movieRate1.duration - movieRate2.duration;
         }
     });
     return newOrderMovies;
@@ -90,12 +86,8 @@ function howManyMovies(movies) {
     var stevenArray = movies.filter(function (movie) {
         return (movie.director === 'Steven Spielberg' && movie.genre.indexOf("Drama") != -1);
     });
-    // if (stevenArray.length === 0) {
-    //     return "Steven Spielberg directed 0 drama movies!";
-    // }
-    // else {
-        return "Steven Spielberg directed " + stevenArray.length + " drama movies!";
-    // }
+    return "Steven Spielberg directed " + stevenArray.length + " drama movies!";
+    
 }
 howManyMovies(movies);
 
